@@ -27,6 +27,7 @@
   text-align: center;
   border: 1px solid #7a28ff;
   color: #111;
+  width: fit-content;
 }
 
 .interactive-node:hover .add-button,
@@ -74,4 +75,28 @@
   &::before {
     translate: 0 .5px;
   }
+}
+
+.interactive-node .node-content .edit-input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: inherit;
+  font-family: inherit;
+  text-align: center;
+  width: 100%;
+  min-width: 60px;
+  max-width: 280px;
+  color: black;
+}
+
+.interactive-node .node-content span {
+  position: absolute;
+  visibility: hidden;
+  white-space: pre;
+  font-size: inherit;
+  font-family: inherit;
+  padding: 0;
+  margin: 0;
+  border: none;
 }

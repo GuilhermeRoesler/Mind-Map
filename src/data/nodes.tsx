@@ -4,7 +4,7 @@ export const initialNodes = [
         type: 'interactive',
         data: { label: 'Text here' },
         position: { x: 0, y: 0 },
-        draggable: false,
+        // draggable: false,
         deletable: false,
         // selectable: false,
     },
@@ -12,6 +12,6 @@ export const initialNodes = [
         id: '2',
         type: 'interactive',
         data: { label: 'Test node' },
-        position: { x: 100, y: 100 },
+        position: { x: 100, y: 0 },
     }
 ];

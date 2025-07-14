@@ -2,17 +2,19 @@ import { memo } from 'react';
 import type { NodeProps } from '@xyflow/react';
 
 import AddButton from './AddButton';
+import InteractiveNodeContent from './InteractiveNodeContent';
 
 interface InteractiveNodeData {
     label: string;
 }
 
 function InteractiveNode({ id, data, selected }: NodeProps<InteractiveNodeData>) {
+
     return (
-        <div className="interactive-node" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+        <div className="interactive-node">
             <AddButton type="left" id={id} />
             <AddButton type="right" id={id} />
-            <div>{data.label}</div>
+            <InteractiveNodeContent id={id} data={data} />
         </div>
     );
 }

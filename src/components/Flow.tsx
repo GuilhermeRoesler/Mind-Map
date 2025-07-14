@@ -51,66 +51,12 @@ function Flow() {
             id: nodeId.toString(),
             data: { label: `Node ${nodeId}` },
             position,
-            type: 'interactive' // Mudança aqui para usar o node interativo
+            type: 'interactive'
         };
 
         setNodes((nds) => [...nds, newNode]);
         setNodeId((id) => id + 1);
     }, [nodeId]);
-
-    // Handler para clique no canvas
-    const onPaneClick = useCallback((event: React.MouseEvent) => {
-        // Só cria nó se não estiver arrastando
-        if (!isDragging.current && reactFlowInstance) {
-            const reactFlowBounds = (event.currentTarget as HTMLElement).getBoundingClientRect();
-            console.log(event);
-            const position = reactFlowInstance.screenToFlowPosition({
-                x: event.clientX - reactFlowBounds.left,
-                y: event.clientY - reactFlowBounds.top,
-            });
-
-            createNode(position);
-        }
-    }, [reactFlowInstance, createNode]);
-
-    // Handler para detectar início do arraste
-    const onNodeDragStart = useCallback(() => {
-        isDragging.current = true;
-    }, []);
-
-    // Handler para detectar fim do arraste
-    const onNodeDragStop = useCallback(() => {
-        // Pequeno delay para evitar conflito com o clique
-        setTimeout(() => {
-            isDragging.current = false;
-        }, 100);
-    }, []);
-
-    // Handler para teclas pressionadas
-    const onKeyDown = useCallback((event: KeyboardEvent) => {
-        // Cria nó ao pressionar a tecla 'N' ou 'Espaço'
-        if (event.code === 'KeyN' || event.code === 'Space') {
-            event.preventDefault();
-
-            if (reactFlowInstance) {
-                // Cria o nó no centro da viewport
-                const centerPosition = reactFlowInstance.screenToFlowPosition({
-                    x: window.innerWidth / 2,
-                    y: window.innerHeight / 2,
-                });
-
-                createNode(centerPosition);
-            }
-        }
-    }, [reactFlowInstance, createNode]);
-
-    // Adiciona/remove event listener para teclas
-    useEffect(() => {
-        document.addEventListener('keydown', onKeyDown);
-        return () => {
-            document.removeEventListener('keydown', onKeyDown);
-        };
-    }, [onKeyDown]);
 
     return (
         <ReactFlowProvider>
@@ -122,14 +68,14 @@ function Flow() {
                 onEdgesChange={onEdgesChange}
                 onConnect={onConnect}
                 onInit={setReactFlowInstance}
-                onPaneClick={onPaneClick}
-                onNodeDragStart={onNodeDragStart}
-                onNodeDragStop={onNodeDragStop}
                 fitView
             />
             <Controls />
-            {/* <MiniMap /> */}
-            <Background variant={BackgroundVariant.Lines} bgColor='#f2f2f2' lineWidth={1} color='#e6e6e6' gap={40} />
+            <Background
+                variant={BackgroundVariant.Lines}
+                bgColor='#f2f2f2'
+                lineWidth={1} color='#e6e6e6'
+                gap={40} />
         </ReactFlowProvider>
     );
 }
