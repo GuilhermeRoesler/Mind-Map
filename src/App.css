@@ -22,12 +22,11 @@
 
 .interactive-node {
   padding: .6rem 1rem;
-  border-radius: 9999px;
+  border-radius: 40px;
   font-size: .5rem;
   text-align: center;
   border: 1px solid #7a28ff;
   color: #111;
-  width: fit-content;
 }
 
 .interactive-node:hover .add-button,
@@ -77,26 +76,19 @@
   }
 }
 
-.interactive-node .node-content .edit-input {
-  border: none;
-  outline: none;
-  background: transparent;
-  font-size: inherit;
-  font-family: inherit;
-  text-align: center;
-  width: 100%;
-  min-width: 60px;
-  max-width: 280px;
-  color: black;
+.interactive-node .node-content {
+  max-width: 350px;
+  word-wrap: break-word;
 }
 
-.interactive-node .node-content span {
-  position: absolute;
-  visibility: hidden;
-  white-space: pre;
-  font-size: inherit;
-  font-family: inherit;
-  padding: 0;
-  margin: 0;
-  border: none;
+.interactive-node .node-label[contenteditable="true"] {
+  background-color: rgba(56, 89, 255, 0.1);
+  border-radius: 4px;
+  padding: 2px 4px;
+  cursor: text;
+}
+
+.interactive-node .node-label[contenteditable="true"]:focus {
+  outline: 2px solid #3859ff;
+  outline-offset: 1px;
 }
