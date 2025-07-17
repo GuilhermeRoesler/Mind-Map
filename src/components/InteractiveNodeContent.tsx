@@ -138,7 +138,8 @@ const InteractiveNodeContent: React.FC<InteractiveNodeContentProps> = ({ id, dat
                 onPaste={handlePaste}
                 className={`node-label ${isEditing ? 'nodrag' : ''}`}
             >
-                {data.label}
+                {/* {data.label} */}
+                {id}
             </p>
         </div>
     );

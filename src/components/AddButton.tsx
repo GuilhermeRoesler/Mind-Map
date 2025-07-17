@@ -1,4 +1,5 @@
 import { useReactFlow } from '@xyflow/react';
+import { ulid } from 'ulid';
 
 const AddButton = ({ type, id }: { type: 'left' | 'right'; id: string }) => {
     const { getNode, setNodes } = useReactFlow();
@@ -7,15 +8,14 @@ const AddButton = ({ type, id }: { type: 'left' | 'right'; id: string }) => {
         const currentNode = getNode(id);
         if (!currentNode) return;
 
-        const offset = 200; // Distância entre os nodes
+        const offset = 50; // Distância entre os nodes
         const newPosition = {
-            x: currentNode.position.x + (direction === 'right' ? offset : -offset),
-            y: currentNode.position.y
+            x: currentNode.position.x + (direction === 'right' ? offset + currentNode.measured?.width : -offset - 98),
+            y: (currentNode.measured?.height / 2) + currentNode.position.y - 16.5
         };
 
-        const newNodeId = `node-${Date.now()}`;
         const newNode = {
-            id: newNodeId,
+            id: ulid(),
             data: { label: `Type something` },
             position: newPosition,
             type: 'interactive'
