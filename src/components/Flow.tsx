@@ -3,7 +3,6 @@ import {
     Background,
     BackgroundVariant,
     Controls,
-    Panel,
     ReactFlow,
     ReactFlowProvider,
     applyEdgeChanges,
@@ -18,6 +17,7 @@ import { initialNodes } from '../data/nodes';
 import { initialEdges } from '../data/edges';
 
 import InteractiveNode from './InteractiveNode';
+import HeaderPanel from './HeaderPanel';
 
 const nodeTypes = {
     interactive: InteractiveNode,
@@ -74,12 +74,7 @@ function Flow() {
                 bgColor='#f2f2f2'
                 lineWidth={1} color='#e6e6e6'
                 gap={40} />
-            <Panel position="top-left" className='header toolbar'>
-                <h1>MindMap<span>Home</span></h1>
-                <i className="fa-solid fa-ellipsis-vertical"><span>Main menu</span></i>
-                <i className="fa-solid fa-download"><span>Exportar</span></i>
-                <i className="fa-solid fa-upload"><span>Importar</span></i>
-            </Panel>
+            <HeaderPanel />
         </ReactFlowProvider>
     );
 }
