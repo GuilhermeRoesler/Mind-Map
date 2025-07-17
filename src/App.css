@@ -20,6 +20,10 @@
   outline: #3859ff solid 1px !important;
 }
 
+.react-flow__handle {
+  opacity: 0;
+}
+
 .interactive-node {
   padding: .6rem 1rem;
   border-radius: 40px;
