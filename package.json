@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@xyflow/react": "^12.8.2",
+    "dagre": "^0.8.5",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "ulid": "^3.0.1",

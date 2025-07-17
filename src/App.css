@@ -14,7 +14,10 @@
   padding: 0;
   box-sizing: border-box;
   font-family: 'Poppins', cursive;
+  color: black;
 }
+
+/* INTERNAL */
 
 .react-flow__node:focus {
   outline: #3859ff solid 1px !important;
@@ -23,6 +26,19 @@
 .react-flow__handle {
   opacity: 0;
 }
+
+.react-flow__controls-button {
+  color: black;
+  border-radius: 4px;
+  transition: all 0.3s;
+
+  &:hover {
+    background-color: rgb(212, 212, 212) !important;
+    color: black !important;
+  }
+}
+
+/* PERSONAL */
 
 .interactive-node {
   padding: .6rem 1rem;
@@ -95,4 +111,56 @@
 .interactive-node .node-label[contenteditable="true"]:focus {
   outline: 2px solid #3859ff;
   outline-offset: 1px;
+}
+
+/* TOOLBAR */
+
+.react-flow__panel.toolbar {
+  height: 3rem;
+  background-color: #121212;
+  padding: 4px 8px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  color: white;
+}
+
+.react-flow__panel.toolbar>* {
+  color: inherit;
+  cursor: pointer;
+  height: 36px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: #2a2a2a;
+  }
+
+  &:hover span {
+    display: block;
+  }
+}
+
+.react-flow__panel.toolbar h1 {
+  font-size: 1.5rem;
+  padding: 0 8px;
+}
+
+.react-flow__panel.toolbar i {
+  font-size: 1.2rem;
+  width: 40px;
+}
+
+.react-flow__panel.toolbar>* span {
+  display: none;
+  position: absolute;
+  color: white;
+  background-color: #222222;
+  bottom: -2rem;
+  border-radius: 8px;
+  padding: 8px;
+  font-size: .8rem;
+  font-weight: 400;
 }

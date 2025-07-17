@@ -2,7 +2,7 @@ import { useReactFlow } from '@xyflow/react';
 import { ulid } from 'ulid';
 
 const AddButton = ({ type, id }: { type: 'left' | 'right'; id: string }) => {
-    const { getNode, setNodes, setEdges } = useReactFlow();
+    const { getNode, getNodes, setNodes, getEdges, setEdges } = useReactFlow();
 
     const createAdjacentNode = (direction: 'left' | 'right') => {
         const currentNode = getNode(id);
@@ -33,6 +33,12 @@ const AddButton = ({ type, id }: { type: 'left' | 'right'; id: string }) => {
 
         setNodes((nodes) => [...nodes, newNode]);
         setEdges((edges) => [...edges, newEdge]);
+
+        // Atualiza o localStorage
+        const updatedNodes = [...getNodes(), newNode];
+        const updatedEdges = [...getEdges(), newEdge];
+        localStorage.setItem('nodes', JSON.stringify(updatedNodes));
+        localStorage.setItem('edges', JSON.stringify(updatedEdges));
     };
 
     return (

@@ -3,6 +3,7 @@ import {
     Background,
     BackgroundVariant,
     Controls,
+    Panel,
     ReactFlow,
     ReactFlowProvider,
     applyEdgeChanges,
@@ -10,7 +11,6 @@ import {
     addEdge,
     type Connection,
     type ReactFlowInstance
-
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 
@@ -27,8 +27,6 @@ function Flow() {
     const [nodes, setNodes] = useState(initialNodes);
     const [edges, setEdges] = useState(initialEdges);
     const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlowInstance | null>(null);
-    const [nodeId, setNodeId] = useState(4);
-    const isDragging = useRef(false);
 
     const onNodesChange = useCallback(
         (changes: any) => setNodes((nds) => applyNodeChanges(changes, nds)),
@@ -45,18 +43,18 @@ function Flow() {
         []
     );
 
-    // Função para criar um novo nó
-    const createNode = useCallback((position: { x: number; y: number }) => {
-        const newNode = {
-            id: nodeId.toString(),
-            data: { label: `Node ${nodeId}` },
-            position,
-            type: 'interactive'
-        };
+    // carrega dados do localStorage
+    useEffect(() => {
+        const storedNodes = localStorage.getItem('nodes');
+        const storedEdges = localStorage.getItem('edges');
 
-        setNodes((nds) => [...nds, newNode]);
-        setNodeId((id) => id + 1);
-    }, [nodeId]);
+        if (storedNodes) {
+            setNodes(JSON.parse(storedNodes));
+        }
+        if (storedEdges) {
+            setEdges(JSON.parse(storedEdges));
+        }
+    }, [])
 
     return (
         <ReactFlowProvider>
@@ -76,6 +74,12 @@ function Flow() {
                 bgColor='#f2f2f2'
                 lineWidth={1} color='#e6e6e6'
                 gap={40} />
+            <Panel position="top-left" className='header toolbar'>
+                <h1>MindMap<span>Home</span></h1>
+                <i className="fa-solid fa-ellipsis-vertical"><span>Main menu</span></i>
+                <i className="fa-solid fa-download"><span>Exportar</span></i>
+                <i className="fa-solid fa-upload"><span>Importar</span></i>
+            </Panel>
         </ReactFlowProvider>
     );
 }
