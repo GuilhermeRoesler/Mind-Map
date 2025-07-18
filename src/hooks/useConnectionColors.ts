@@ -8,20 +8,22 @@ export const useConnectionColors = () => {
     const updateConnectionColors = useCallback(() => {
         const edges = getEdges();
 
-        // Agrupa edges por pai
-        const edgesByParent = edges.reduce((acc, edge) => {
-            if (!acc[edge.source]) {
-                acc[edge.source] = [];
+        // Agrupa edges por pai E por lado
+        const edgesByParentAndSide = edges.reduce((acc, edge) => {
+            const key = `${edge.source}-${edge.targetHandle}`;
+            if (!acc[key]) {
+                acc[key] = [];
             }
-            acc[edge.source].push(edge);
+            acc[key].push(edge);
             return acc;
         }, {} as Record<string, any[]>);
 
-        // Atualiza as cores baseado na ordem
+        // Atualiza as cores baseado na ordem por lado
         const updatedEdges = edges.map(edge => {
-            const parentEdges = edgesByParent[edge.source] || [];
-            const sortedParentEdges = parentEdges.sort((a, b) => a.id.localeCompare(b.id));
-            const childIndex = sortedParentEdges.findIndex(e => e.id === edge.id);
+            const key = `${edge.source}-${edge.targetHandle}`;
+            const sideEdges = edgesByParentAndSide[key] || [];
+            const sortedSideEdges = sideEdges.sort((a, b) => a.id.localeCompare(b.id));
+            const childIndex = sortedSideEdges.findIndex(e => e.id === edge.id);
             const color = getConnectionColor(childIndex);
 
             return {

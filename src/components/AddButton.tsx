@@ -3,7 +3,7 @@ import { ulid } from 'ulid';
 import { getConnectionColor } from '../utils/colorUtils';
 
 const AddButton = ({ type, id }: { type: 'left' | 'right'; id: string }) => {
-    const { getNode, getNodes, setNodes, getEdges, setEdges } = useReactFlow();
+    const { getNode, setNodes, getEdges, setEdges } = useReactFlow();
 
     const createAdjacentNode = (direction: 'left' | 'right') => {
         const currentNode = getNode(id);
@@ -20,7 +20,10 @@ const AddButton = ({ type, id }: { type: 'left' | 'right'; id: string }) => {
         const newNodeId = ulid();
         const newNode = {
             id: newNodeId,
-            data: { label: `Type something` },
+            data: {
+                label: `Type something`,
+                side: type
+            },
             position: newPosition,
             type: 'interactive',
             style: {
@@ -29,7 +32,12 @@ const AddButton = ({ type, id }: { type: 'left' | 'right'; id: string }) => {
         };
 
         const currentEdges = getEdges();
-        const childIndex = currentEdges.filter(edge => edge.source === id).length;
+        const childIndex = currentEdges.filter(edge => {
+            const expectedHandle = direction === 'right' ? 'left-target' : 'right-target';
+            return edge.source === id && edge.targetHandle === expectedHandle;
+        }).length;
+
+        console.log(childIndex);
         const connectionColor = getConnectionColor(childIndex);
 
         const newEdge = {

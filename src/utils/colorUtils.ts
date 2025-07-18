@@ -14,19 +14,23 @@ export const CONNECTION_COLORS = [
 ] as const;
 
 export const getConnectionColor = (childIndex: number): string => {
+    console.log(`childIndex ${childIndex}`);
     return CONNECTION_COLORS[childIndex % CONNECTION_COLORS.length];
 }
 
-export const getChildIndex = (parentId: string, childId: string, edges: any[]): number => {
-    // Encontra todas as conexões do pai
-    const parentConnections = edges
-        .filter((edge) => edge.source === parentId)
-        .sort((a, b) => {
-            // Ordena por ordem de criação (usando o ID da edge como referência)
-            return a.id.localeCompare(b.id);
-        });
+export const getChildIndex = (parentId: string, childId: string, edges: any[], side?: 'left' | 'right'): number => {
+    let parentConnections = edges.filter((edge) => edge.source === parentId);
 
-    // Encontra o índice do filho atual
+    // Se um lado específico foi fornecido, filtra apenas por esse lado
+    if (side) {
+        const expectedHandle = side === 'right' ? 'left-target' : 'right-target';
+        parentConnections = parentConnections.filter(edge => edge.targetHandle === expectedHandle);
+    }
+
+    parentConnections.sort((a, b) => {
+        return a.id.localeCompare(b.id);
+    });
+
     const childIndex = parentConnections.findIndex((edge) => edge.target === childId);
     return childIndex >= 0 ? childIndex : 0;
 };

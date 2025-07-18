@@ -19,6 +19,10 @@
 
 /* INTERNAL */
 
+.react-flow__node {
+  border-radius: 40px;
+}
+
 .react-flow__node:focus {
   outline: #3859ff solid 1px !important;
 }
@@ -42,7 +46,6 @@
 
 .interactive-node {
   padding: .6rem 1rem;
-  border-radius: 40px;
   font-size: .5rem;
   text-align: center;
   /* border: 1px solid #7a28ff; */
@@ -79,6 +82,10 @@
     left: auto;
     right: -27px;
   }
+}
+
+.add-button[type="left"] {
+  background-color: red;
 }
 
 .add-button i {
