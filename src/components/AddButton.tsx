@@ -22,7 +22,10 @@ const AddButton = ({ type, id }: { type: 'left' | 'right'; id: string }) => {
             id: newNodeId,
             data: { label: `Type something` },
             position: newPosition,
-            type: 'interactive'
+            type: 'interactive',
+            style: {
+                border: 'none',
+            }
         };
 
         const currentEdges = getEdges();
@@ -47,12 +50,6 @@ const AddButton = ({ type, id }: { type: 'left' | 'right'; id: string }) => {
 
         setNodes((nodes) => [...nodes, newNode]);
         setEdges((edges) => [...edges, newEdge]);
-
-        // Atualiza o localStorage
-        const updatedNodes = [...getNodes(), newNode];
-        const updatedEdges = [...getEdges(), newEdge];
-        localStorage.setItem('nodes', JSON.stringify(updatedNodes));
-        localStorage.setItem('edges', JSON.stringify(updatedEdges));
     };
 
     return (

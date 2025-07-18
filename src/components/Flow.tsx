@@ -31,17 +31,35 @@ function FlowContent() {
     const { updateConnectionColors } = useConnectionColors();
 
     const onNodesChange = useCallback(
-        (changes: any) => setNodes((nds) => applyNodeChanges(changes, nds)),
+        (changes: any) => {
+            setNodes((nds) => {
+                const updatedNodes = applyNodeChanges(changes, nds);
+                localStorage.setItem('nodes', JSON.stringify(updatedNodes));
+                return updatedNodes;
+            })
+        },
         []
     );
 
     const onEdgesChange = useCallback(
-        (changes: any) => setEdges((eds) => applyEdgeChanges(changes, eds)),
+        (changes: any) => {
+            setEdges((eds) => {
+                const updatedEdges = applyEdgeChanges(changes, eds)
+                localStorage.setItem('edges', JSON.stringify(updatedEdges));
+                return updatedEdges;
+            })
+        },
         []
     );
 
     const onConnect = useCallback(
-        (connection: Connection) => setEdges((eds) => addEdge(connection, eds)),
+        (connection: Connection) => {
+            setEdges((eds) => {
+                const updatedEdges = addEdge(connection, eds);
+                localStorage.setItem('edges', JSON.stringify(updatedEdges));
+                return updatedEdges;
+            })
+        },
         []
     );
 

@@ -1,11 +1,12 @@
 export const initialNodes = [
     {
-        id: '1',
+        id: 'root',
         type: 'interactive',
         data: { label: 'Type something' },
         position: { x: 0, y: 0 },
-        // draggable: false,
         deletable: false,
-        // selectable: false,
+        style: {
+            border: '1px solid #7a28ff',
+        }
     },
 ];
