@@ -15,6 +15,7 @@ import '@xyflow/react/dist/style.css';
 
 import { initialNodes } from '../data/nodes';
 import { initialEdges } from '../data/edges';
+import { useConnectionColors } from '../hooks/useConnectionColors';
 
 import InteractiveNode from './InteractiveNode';
 import HeaderPanel from './HeaderPanel';
@@ -23,10 +24,11 @@ const nodeTypes = {
     interactive: InteractiveNode,
 }
 
-function Flow() {
+function FlowContent() {
     const [nodes, setNodes] = useState(initialNodes);
     const [edges, setEdges] = useState(initialEdges);
     const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlowInstance | null>(null);
+    const { updateConnectionColors } = useConnectionColors();
 
     const onNodesChange = useCallback(
         (changes: any) => setNodes((nds) => applyNodeChanges(changes, nds)),
@@ -43,7 +45,7 @@ function Flow() {
         []
     );
 
-    // carrega dados do localStorage
+    // Carrega dados do localStorage
     useEffect(() => {
         const storedNodes = localStorage.getItem('nodes');
         const storedEdges = localStorage.getItem('edges');
@@ -54,10 +56,17 @@ function Flow() {
         if (storedEdges) {
             setEdges(JSON.parse(storedEdges));
         }
-    }, [])
+    }, []);
+
+    // Atualiza cores das conexões quando edges mudam
+    useEffect(() => {
+        if (edges.length > 0) {
+            updateConnectionColors();
+        }
+    }, [edges.length, updateConnectionColors]);
 
     return (
-        <ReactFlowProvider>
+        <>
             <ReactFlow
                 nodes={nodes}
                 edges={edges}
@@ -75,8 +84,16 @@ function Flow() {
                 lineWidth={1} color='#e6e6e6'
                 gap={40} />
             <HeaderPanel />
-        </ReactFlowProvider>
+        </>
     );
+}
+
+function Flow() {
+    return (
+        <ReactFlowProvider>
+            <FlowContent />
+        </ReactFlowProvider>
+    )
 }
 
 export default Flow;

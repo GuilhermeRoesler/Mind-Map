@@ -1,5 +1,6 @@
 import { useReactFlow } from '@xyflow/react';
 import { ulid } from 'ulid';
+import { getConnectionColor } from '../utils/colorUtils';
 
 const AddButton = ({ type, id }: { type: 'left' | 'right'; id: string }) => {
     const { getNode, getNodes, setNodes, getEdges, setEdges } = useReactFlow();
@@ -10,7 +11,9 @@ const AddButton = ({ type, id }: { type: 'left' | 'right'; id: string }) => {
 
         const offset = 50; // Distância entre os nodes
         const newPosition = {
-            x: currentNode.position.x + (direction === 'right' ? offset + (currentNode.measured?.width || 0) : -offset - 98),
+            x: currentNode.position.x + (direction === 'right'
+                ? offset + (currentNode.measured?.width || 0)
+                : -offset - 98),
             y: (currentNode.measured?.height || 0) / 2 + currentNode.position.y - 16.5
         };
 
@@ -22,13 +25,24 @@ const AddButton = ({ type, id }: { type: 'left' | 'right'; id: string }) => {
             type: 'interactive'
         };
 
+        const currentEdges = getEdges();
+        const childIndex = currentEdges.filter(edge => edge.source === id).length;
+        const connectionColor = getConnectionColor(childIndex);
+
         const newEdge = {
             id: `edge-${id}-${newNodeId}`,
             source: id,
             target: newNodeId,
             sourceHandle: direction === 'right' ? 'right' : 'left',
             targetHandle: direction === 'right' ? 'left-target' : 'right-target',
-            type: 'default'
+            type: 'default',
+            style: {
+                stroke: connectionColor,
+            },
+            data: {
+                color: connectionColor,
+                childIndex: childIndex
+            }
         };
 
         setNodes((nodes) => [...nodes, newNode]);
