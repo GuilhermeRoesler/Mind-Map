@@ -94,6 +94,7 @@ function FlowContent() {
                 onConnect={onConnect}
                 onInit={setReactFlowInstance}
                 fitView
+                attributionPosition="bottom-left"
             />
             <Controls />
             <Background

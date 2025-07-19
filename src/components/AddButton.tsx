@@ -36,8 +36,6 @@ const AddButton = ({ type, id }: { type: 'left' | 'right'; id: string }) => {
             const expectedHandle = direction === 'right' ? 'left-target' : 'right-target';
             return edge.source === id && edge.targetHandle === expectedHandle;
         }).length;
-
-        console.log(childIndex);
         const connectionColor = getConnectionColor(childIndex);
 
         const newEdge = {

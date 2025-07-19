@@ -14,7 +14,6 @@ export const CONNECTION_COLORS = [
 ] as const;
 
 export const getConnectionColor = (childIndex: number): string => {
-    console.log(`childIndex ${childIndex}`);
     return CONNECTION_COLORS[childIndex % CONNECTION_COLORS.length];
 }
 

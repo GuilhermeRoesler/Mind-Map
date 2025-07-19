@@ -171,4 +171,36 @@
   padding: 8px;
   font-size: .8rem;
   font-weight: 400;
+  user-select: none;
+}
+
+.react-flow__panel.toolbar .menu {
+  position: absolute;
+  background-color: #121212;
+  bottom: -4.5rem;
+  left: 140px;
+  min-width: 300px;
+  padding: .8rem;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.react-flow__panel.toolbar .menu p {
+  color: white;
+  font-size: .9rem;
+  font-weight: 400;
+  padding: inherit;
+  border-radius: inherit;
+  user-select: none;
+
+  &:hover {
+    background-color: #242424;
+  }
+}
+
+.react-flow__panel.toolbar span:has(+.menu:hover),
+.react-flow__panel.toolbar i:focus span {
+  display: none;
 }
