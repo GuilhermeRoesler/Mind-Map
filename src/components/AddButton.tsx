@@ -1,9 +1,11 @@
 import { useReactFlow } from '@xyflow/react';
 import { ulid } from 'ulid';
 import { getConnectionColor } from '../utils/colorUtils';
+import { useLayoutNodes } from '../hooks/useLayoutNodes';
 
 const AddButton = ({ type, id }: { type: 'left' | 'right'; id: string }) => {
     const { getNode, setNodes, getEdges, setEdges } = useReactFlow();
+    const { layoutNodes } = useLayoutNodes();
 
     const createAdjacentNode = (direction: 'left' | 'right') => {
         const currentNode = getNode(id);
@@ -56,6 +58,9 @@ const AddButton = ({ type, id }: { type: 'left' | 'right'; id: string }) => {
 
         setNodes((nodes) => [...nodes, newNode]);
         setEdges((edges) => [...edges, newEdge]);
+        setTimeout(() => {
+            layoutNodes();
+        }, 100);
     };
 
     return (
