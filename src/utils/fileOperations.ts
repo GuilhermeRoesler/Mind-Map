@@ -14,7 +14,7 @@ export const exportMindMap = async (nodes: Node[], edges: Edge[]): Promise<void>
 
     try {
         const fileHandle = await window.showSaveFilePicker({
-            suggestedName: 'MindMap.json',
+            suggestedName: nodes[0].data.label,
             types: [
                 {
                     description: 'Arquivo JSON',
