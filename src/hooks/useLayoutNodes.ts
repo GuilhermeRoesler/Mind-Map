@@ -2,14 +2,14 @@ import { useCallback } from "react";
 import { useReactFlow, type Node, type Edge, Position } from "@xyflow/react";
 import dagre from 'dagre';
 
-const dagreGraph = new dagre.graphlib.Graph();
-dagreGraph.setDefaultEdgeLabel(() => ({}));
-
 const nodeWidth = 172;
 const nodeHeight = 36;
 
 const getLayoutedElements = (nodes: Node[], edges: Edge[], direction = 'LR') => {
     const isHorizontal = direction === 'LR';
+
+    const dagreGraph = new dagre.graphlib.Graph();
+    dagreGraph.setDefaultEdgeLabel(() => ({}));
     dagreGraph.setGraph({ rankdir: direction });
 
     nodes.forEach((node) => {
@@ -39,12 +39,16 @@ const getLayoutedElements = (nodes: Node[], edges: Edge[], direction = 'LR') => 
 };
 
 export const useLayoutNodes = () => {
-    const { getNodes, getEdges, setNodes, setEdges } = useReactFlow();
+    const { getNodes, getEdges, setNodes, setEdges, fitView } = useReactFlow();
 
-    const layoutNodes = useCallback((direction: 'TB' | 'BT' | 'LR' | 'RL' = 'LR') => {
-        const { nodes, edges } = getLayoutedElements(getNodes(), getEdges(), direction);
+    const layoutNodes = useCallback(() => {
+        const { nodes, edges } = getLayoutedElements(getNodes(), getEdges());
+        console.log(nodes)
         setNodes(nodes);
         setEdges(edges);
+
+        if (false)
+            fitView({ duration: 500 });
 
         localStorage.setItem('nodes', JSON.stringify(nodes));
         localStorage.setItem('edges', JSON.stringify(edges));

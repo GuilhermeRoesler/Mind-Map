@@ -139,7 +139,6 @@ const InteractiveNodeContent: React.FC<InteractiveNodeContentProps> = ({ id, dat
                 className={`node-label ${isEditing ? 'nodrag' : ''}`}
             >
                 {data.label}
-                {/* {id} */}
             </p>
         </div>
     );

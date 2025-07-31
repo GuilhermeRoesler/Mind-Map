@@ -9,7 +9,8 @@ import {
     applyNodeChanges,
     addEdge,
     type Connection,
-    type ReactFlowInstance
+    type Node
+    // type ReactFlowInstance
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 
@@ -19,6 +20,7 @@ import { useConnectionColors } from '../hooks/useConnectionColors';
 
 import InteractiveNode from './InteractiveNode';
 import HeaderPanel from './HeaderPanel';
+import { useLayoutNodes } from '../hooks/useLayoutNodes';
 
 const nodeTypes = {
     interactive: InteractiveNode,
@@ -27,8 +29,9 @@ const nodeTypes = {
 function FlowContent() {
     const [nodes, setNodes] = useState(initialNodes);
     const [edges, setEdges] = useState(initialEdges);
-    const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlowInstance | null>(null);
+    // const [_, setReactFlowInstance] = useState<ReactFlowInstance | null>(null);
     const { updateConnectionColors } = useConnectionColors();
+    const { layoutNodes } = useLayoutNodes();
 
     const onNodesChange = useCallback(
         (changes: any) => {
@@ -39,6 +42,17 @@ function FlowContent() {
             })
         },
         []
+    );
+
+    const onNodesDelete = useCallback(
+        (nodes: Node[]) => {
+            setNodes((nds) => nds.filter((node) => !nodes.includes(node)));
+            localStorage.setItem('nodes', JSON.stringify(nodes));
+            setTimeout(() => {
+                layoutNodes();
+            }, 100);
+        },
+        [layoutNodes, nodes]
     );
 
     const onEdgesChange = useCallback(
@@ -90,9 +104,10 @@ function FlowContent() {
                 edges={edges}
                 nodeTypes={nodeTypes}
                 onNodesChange={onNodesChange}
+                onNodesDelete={onNodesDelete}
                 onEdgesChange={onEdgesChange}
                 onConnect={onConnect}
-                onInit={setReactFlowInstance}
+                // onInit={setReactFlowInstance}
                 fitView
                 attributionPosition="bottom-left"
             />
