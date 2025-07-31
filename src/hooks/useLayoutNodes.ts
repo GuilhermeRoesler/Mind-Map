@@ -43,7 +43,6 @@ export const useLayoutNodes = () => {
 
     const layoutNodes = useCallback(() => {
         const { nodes, edges } = getLayoutedElements(getNodes(), getEdges());
-        console.log(nodes)
         setNodes(nodes);
         setEdges(edges);
 

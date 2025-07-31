@@ -180,8 +180,12 @@ input[type="range"] {
   }
 }
 
+.interactive-node:focus {
+  outline: #3859ff solid 1px !important;
+}
+
 .interactive-node:hover .add-button,
-.react-flow__node:focus .add-button {
+.interactive-node:focus .add-button {
   display: block;
 }
 
