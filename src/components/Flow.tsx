@@ -9,7 +9,8 @@ import {
     applyNodeChanges,
     addEdge,
     type Connection,
-    type Node
+    type Node,
+    SelectionMode
     // type ReactFlowInstance
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
@@ -25,6 +26,12 @@ import { useLayoutNodes } from '../hooks/useLayoutNodes';
 const nodeTypes = {
     interactive: InteractiveNode,
 }
+
+const flowConfig = {
+    selectionMode: SelectionMode.Partial,
+    multiSelectionKeyCode: 'Shift',
+};
+
 
 function FlowContent() {
     const [nodes, setNodes] = useState(initialNodes);
@@ -110,6 +117,7 @@ function FlowContent() {
                 // onInit={setReactFlowInstance}
                 fitView
                 attributionPosition="bottom-left"
+                {...flowConfig}
             />
             <Controls />
             <Background
