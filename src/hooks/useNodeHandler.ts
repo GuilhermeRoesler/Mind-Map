@@ -82,16 +82,32 @@ const useNodeHandler = () => {
         createAdjacentNode(parentId);
     }
 
-    const deleteNode = (id: string) => {
-        const edges = getEdges().filter(edge => edge.source !== id && edge.target !== id);
-        setEdges(edges);
+    const collectDescendantIds = (id: string, nodes: any[]): string[] => {
+        const children = nodes.filter(node => node.data.parentId === id);
+        let ids = [id];
+        children.forEach(child => {
+            ids = ids.concat(collectDescendantIds(child.id, nodes));
+        });
+        return ids;
+    };
 
-        const nodes = getNodes().filter(node => node.id !== id);
-        setNodes(nodes);
+    const deleteNode = (id: string) => {
+        const nodes = getNodes();
+        const edges = getEdges();
+
+        // Coleta todos os ids a serem removidos (node + descendentes)
+        const idsToRemove = collectDescendantIds(id, nodes);
+
+        // Remove nodes
+        setNodes(nodes.filter(node => !idsToRemove.includes(node.id)));
+
+        // Remove edges ligados a qualquer um dos nodes removidos
+        setEdges(edges.filter(edge => !idsToRemove.includes(edge.source) && !idsToRemove.includes(edge.target)));
+
         setTimeout(() => {
             layoutNodes();
         }, 100);
-    }
+    };
 
     return { createAdjacentNode, createSiblingNode, deleteNode };
 };
